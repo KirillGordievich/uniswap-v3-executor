@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build
+dist/
+*.tsbuildinfo
+
+# Environment
+.env
+
+# IDE
+.idea/
+.vscode/
+
+# Test
+coverage/
+
+# Hardhat / Solidity
+artifacts/
+cache/
+
+# OS
+.DS_Store
+
+# Logs
+*.log

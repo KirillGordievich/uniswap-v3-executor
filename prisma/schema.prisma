@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  SUBMITTED
+  DELAYED
+  EXPIRED
+  CANCELED
+  PARTIALLY_FILLED
+  FILLED
+}
+
+model Token {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  address   Bytes    @unique @db.ByteA
+  decimals  Int      @db.Integer
+  symbol    String   @db.Text
+  name      String   @db.Text
+
+  poolsAsToken0 Pool[]  @relation("PoolToken0")
+  poolsAsToken1 Pool[]  @relation("PoolToken1")
+  sellOrders    Order[] @relation("OrderTokenSell")
+  buyOrders     Order[] @relation("OrderTokenBuy")
+
+  @@map("token")
+}
+
+model Pool {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz()
+  address   Bytes    @unique @db.ByteA
+  token0Id  String   @map("token0_id") @db.Uuid
+  token1Id  String   @map("token1_id") @db.Uuid
+  fee       Decimal  @db.Decimal
+  enabled   Boolean  @db.Boolean
+
+  token0 Token @relation("PoolToken0", fields: [token0Id], references: [id])
+  token1 Token @relation("PoolToken1", fields: [token1Id], references: [id])
+
+  @@unique([token0Id, token1Id, fee])
+  @@map("pool")
+}
+
+model Order {
+  id                  String      @id @default(uuid()) @db.Uuid
+  createdAt           DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt           DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamptz()
+  tokenSellId         String      @map("token_sell_id") @db.Uuid
+  tokenBuyId          String      @map("token_buy_id") @db.Uuid
+  quantitySellOrdered Decimal     @map("quantity_sell_ordered") @db.Decimal
+  quantityBuyOrdered  Decimal     @map("quantity_buy_ordered") @db.Decimal
+  deadline            DateTime    @db.Timestamptz()
+  description         String      @db.Text
+  authorized          Boolean     @db.Boolean
+  finalized           Boolean     @db.Boolean
+  status              OrderStatus
+  quantitySellTraded  Decimal     @map("quantity_sell_traded") @db.Decimal
+  quantityBuyTraded   Decimal     @map("quantity_buy_traded") @db.Decimal
+  quantityFeeTraded   Decimal     @map("quantity_fee_traded") @db.Decimal
+
+  tokenSell    Token              @relation("OrderTokenSell", fields: [tokenSellId], references: [id])
+  tokenBuy     Token              @relation("OrderTokenBuy", fields: [tokenBuyId], references: [id])
+  transactions OrderTransaction[]
+  transfers    TransferTransaction[]
+
+  @@index([tokenSellId, tokenBuyId])
+  @@index([updatedAt(sort: Desc), status])
+  @@map("order")
+}
+
+model Transaction {
+  id                   String   @id @default(uuid()) @db.Uuid
+  createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt            DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz()
+  fromAddress          Bytes    @map("from_address") @db.ByteA
+  toAddress            Bytes    @map("to_address") @db.ByteA
+  nonce                Decimal  @db.Decimal
+  value                Decimal  @db.Decimal
+  data                 Bytes    @db.ByteA
+  payload              String   @db.Text
+  gasLimit             Decimal  @map("gas_limit") @db.Decimal
+  maxPriorityFeePerGas Decimal  @map("max_priority_fee_per_gas") @db.Decimal
+  maxFeePerGas         Decimal  @map("max_fee_per_gas") @db.Decimal
+  hash                 Bytes    @unique @db.ByteA
+  confirmed            Boolean  @db.Boolean
+  fee                  Decimal  @db.Decimal
+  successful           Boolean  @db.Boolean
+
+  orderTransaction    OrderTransaction?
+  transferTransaction TransferTransaction?
+
+  @@index([createdAt(sort: Desc)])
+  @@index([fromAddress, nonce(sort: Desc), confirmed])
+  @@map("transaction")
+}
+
+model OrderTransaction {
+  id      String @id @db.Uuid
+  orderId String @map("order_id") @db.Uuid
+
+  transaction Transaction @relation(fields: [id], references: [id])
+  order       Order       @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+  @@map("order_transaction")
+}
+
+model TransferTransaction {
+  id      String @id @db.Uuid
+  orderId String @map("order_id") @db.Uuid
+
+  transaction Transaction @relation(fields: [id], references: [id])
+  order       Order       @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+  @@map("transfer_transaction")
+}

@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package syncer;
+
+service SyncerService {
+  rpc AddToken(AddTokenRequest) returns (Empty);
+  rpc ExistsToken(TokenAddressRequest) returns (ExistsResponse);
+  rpc ListTokens(Empty) returns (ListTokensResponse);
+  rpc DeleteToken(TokenAddressRequest) returns (Empty);
+
+  rpc AddPool(PoolAddressRequest) returns (Empty);
+  rpc ExistsPool(PoolAddressRequest) returns (ExistsResponse);
+  rpc ListPools(Empty) returns (ListPoolsResponse);
+  rpc DeletePool(PoolAddressRequest) returns (Empty);
+  rpc ResyncPool(PoolAddressRequest) returns (Empty);
+  rpc ResyncPools(Empty) returns (Empty);
+
+  rpc EstimateBuy(EstimateRequest) returns (EstimateResponse);
+  rpc EstimateSell(EstimateRequest) returns (EstimateResponse);
+  rpc PlanBuy(EstimateRequest) returns (SwapPlanResponse);
+  rpc PlanSell(EstimateRequest) returns (SwapPlanResponse);
+
+  rpc Healthcheck(Empty) returns (HealthcheckResponse);
+}
+
+message Empty {}
+
+message AddTokenRequest {
+  string address = 1;
+}
+
+message TokenAddressRequest {
+  string address = 1;
+}
+
+message PoolAddressRequest {
+  string address = 1;
+}
+
+message ExistsResponse {
+  bool exists = 1;
+}
+
+message ListTokensResponse {
+  repeated string addresses = 1;
+}
+
+message ListPoolsResponse {
+  repeated string addresses = 1;
+}
+
+message EstimateRequest {
+  string token_sell_address = 1;
+  string token_buy_address = 2;
+  string quantity = 3;
+}
+
+message EstimateResponse {
+  string quantity = 1;
+}
+
+message SwapPlanResponse {
+  string quantity_sell = 1;
+  string quantity_buy = 2;
+  repeated string path = 3;
+}
+
+message PoolHealth {
+  string address = 1;
+  int64 timestamp = 2;
+  int64 block_number = 3;
+}
+
+message HealthcheckResponse {
+  repeated PoolHealth pools = 1;
+}

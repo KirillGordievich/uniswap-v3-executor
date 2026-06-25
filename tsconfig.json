@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2021",
+    "lib": ["ES2021"],
+    "moduleResolution": "node10",
+    "ignoreDeprecations": "6.0",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "incremental": true,
+    "sourceMap": true,
+    "paths": {
+      "@libs/core": ["./libs/core/src"],
+      "@libs/core/*": ["./libs/core/src/*"],
+      "@libs/math": ["./libs/math/src"],
+      "@libs/math/*": ["./libs/math/src/*"],
+      "@libs/database": ["./libs/database/src"],
+      "@libs/database/*": ["./libs/database/src/*"],
+      "@libs/ethers": ["./libs/ethers/src"],
+      "@libs/ethers/*": ["./libs/ethers/src/*"],
+      "@libs/logger": ["./libs/logger/src"],
+      "@libs/logger/*": ["./libs/logger/src/*"],
+      "@libs/abi": ["./libs/abi/src"],
+      "@libs/abi/*": ["./libs/abi/src/*"],
+      "@libs/grpc": ["./libs/grpc/src"],
+      "@libs/grpc/*": ["./libs/grpc/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: uniswap3
+      POSTGRES_USER: uniswap3
+      POSTGRES_PASSWORD: uniswap3
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U uniswap3 -d uniswap3']
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  syncer:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: syncer
+    restart: unless-stopped
+    ports:
+      - '50051:50051'
+    env_file: ../.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: api
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    env_file: ../.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      syncer:
+        condition: service_started
+
+volumes:
+  pgdata:

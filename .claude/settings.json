@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm add -Dw supertest @types/supertest)",
+      "Bash(pnpm test -- --testPathPattern='apps/api/test')",
+      "Bash(for dir in /home/kirillg/Desktop/work/pet_projects/uniswap3-main/libs/*/)",
+      "Bash(do basename \"$dir\")"
+    ]
+  }
+}

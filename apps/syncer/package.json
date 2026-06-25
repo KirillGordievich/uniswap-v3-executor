@@ -1,0 +1,10 @@
+{
+  "name": "@uniswap3/syncer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "nest build",
+    "dev": "nest start --watch | pino-pretty -c",
+    "start": "node dist/apps/syncer/src/main.js"
+  }
+}
