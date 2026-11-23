@@ -1,25 +1,23 @@
-import { ethers } from 'ethers';
-
+import { ITickLensABI, IUniswapV3PoolABI } from '@libs/abi';
 import {
-  IntRange,
-  LVC,
-  Token,
   compareTokens,
+  EvmCallError,
   getCompressedTick,
   getTickSpacingFromFee,
   getTickWord,
-  normalizeAddress,
-  parseNumber,
-  parseBigInt,
-  EvmCallError,
+  IntRange,
   LensCallError,
-  PoolCallError,
-  UNISWAP_V3_TICK_LENS_ADDRESS,
+  LVC,
+  normalizeAddress,
+  parseBigInt,
+  parseNumber,
   pipFee,
+  PoolCallError,
+  Token,
+  UNISWAP_V3_TICK_LENS_ADDRESS,
 } from '@libs/core';
-import { IUniswapV3PoolABI, ITickLensABI } from '@libs/abi';
-
 import { Logger } from '@libs/logger';
+import { ethers } from 'ethers';
 
 import { CalcService } from '../calc/calc.service';
 import { TickBookService, TickLiquidity } from './tick-book.service';
@@ -118,7 +116,9 @@ export class PoolService {
         sqrtPrice: parseBigInt(sqrtPriceX96),
       };
     } catch (error) {
-      throw new PoolCallError(`could not get pool ${this._address} slot 0 from block ${blockNumber}: ${error instanceof Error ? error.message : String(error)}`);
+      throw new PoolCallError(
+        `could not get pool ${this._address} slot 0 from block ${blockNumber}: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
@@ -151,7 +151,10 @@ export class PoolService {
     });
   }
 
-  private async getTicksInRange(tickRange: IntRange, blockNumber: string | number = 'latest'): Promise<TickLiquidity[]> {
+  private async getTicksInRange(
+    tickRange: IntRange,
+    blockNumber: string | number = 'latest',
+  ): Promise<TickLiquidity[]> {
     const tickLowerWord = getTickWord(getCompressedTick(tickRange.lower, this._tickSpacing));
     const tickUpperWord = getTickWord(getCompressedTick(tickRange.upper, this._tickSpacing));
 
@@ -297,7 +300,13 @@ export class PoolService {
       const liquidity = parseBigInt(args.liquidity as string);
       const sqrtPrice = parseBigInt(args.sqrtPriceX96 as string);
 
-      this.logger.info('block %d, swap to tick %d, liquidity %s, sqrt price %s', blockNumber, tick, liquidity, sqrtPrice);
+      this.logger.info(
+        'block %d, swap to tick %d, liquidity %s, sqrt price %s',
+        blockNumber,
+        tick,
+        liquidity,
+        sqrtPrice,
+      );
 
       return this.awaitPromise(this.onSwap(blockNumber, tick, liquidity, sqrtPrice));
     });

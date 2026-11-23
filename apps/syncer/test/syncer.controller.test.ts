@@ -1,5 +1,5 @@
-import { RpcException } from '@nestjs/microservices';
 import { status } from '@grpc/grpc-js';
+import { RpcException } from '@nestjs/microservices';
 
 import { SyncerController } from '../src/syncer.controller';
 import { SyncerService } from '../src/syncer.service';

@@ -1,9 +1,8 @@
-import { NestFactory } from '@nestjs/core';
+import { Logger } from '@libs/logger';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-
-import { Logger } from '@libs/logger';
 
 import { AppModule } from './app.module';
 

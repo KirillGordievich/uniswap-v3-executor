@@ -1,5 +1,5 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
-import pino, { Logger as PinoLogger, LogFn } from 'pino';
+import pino, { LogFn, Logger as PinoLogger } from 'pino';
 
 export const LOGGER_CONTEXT = 'LOGGER_CONTEXT';
 

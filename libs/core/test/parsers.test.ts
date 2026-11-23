@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 
-import { parseNumber, parseBigInt } from '../src/parsers';
+import { parseBigInt, parseNumber } from '../src/parsers';
 
 describe('parsers', () => {
   const values = [5, 0, -30];

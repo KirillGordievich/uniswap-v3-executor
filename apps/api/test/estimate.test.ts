@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
 import { of } from 'rxjs';
+import request from 'supertest';
 
 import { createTestApp, mockSyncerService, TEST_API_KEY } from './setup';
 
@@ -31,10 +31,7 @@ describe('EstimateController (e2e)', () => {
     });
 
     it('returns 400 without required query params', async () => {
-      await request(app.getHttpServer())
-        .get('/v1/estimates/buy')
-        .set('x-api-key', TEST_API_KEY)
-        .expect(400);
+      await request(app.getHttpServer()).get('/v1/estimates/buy').set('x-api-key', TEST_API_KEY).expect(400);
     });
 
     it('returns 400 for non-hex tokenSellAddress', async () => {
@@ -80,10 +77,7 @@ describe('EstimateController (e2e)', () => {
     });
 
     it('returns 400 without required query params', async () => {
-      await request(app.getHttpServer())
-        .get('/v1/estimates/sell')
-        .set('x-api-key', TEST_API_KEY)
-        .expect(400);
+      await request(app.getHttpServer()).get('/v1/estimates/sell').set('x-api-key', TEST_API_KEY).expect(400);
     });
 
     it('returns estimated sell quantity', async () => {

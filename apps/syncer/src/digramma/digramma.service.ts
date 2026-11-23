@@ -1,11 +1,10 @@
+import { makePath, Path, Token, TraversalError } from '@libs/core';
 import { Injectable } from '@nestjs/common';
 import cy, { EdgeCollection, EdgeSingular, NodeCollection } from 'cytoscape';
 import { Decimal } from 'decimal.js';
 
-import { Token, TraversalError, makePath, Path } from '@libs/core';
-
-import { PoolService } from '../pool/pool.service';
 import { CalcService } from '../calc/calc.service';
+import { PoolService } from '../pool/pool.service';
 
 const EDGE = '_edge';
 const QUANTITY = '_quantity';

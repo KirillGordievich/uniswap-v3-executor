@@ -1,6 +1,6 @@
+import { status } from '@grpc/grpc-js';
 import { Controller } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
-import { status } from '@grpc/grpc-js';
 
 import { SyncerService } from './syncer.service';
 
@@ -67,7 +67,10 @@ export class SyncerController {
 
       return {};
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -88,7 +91,10 @@ export class SyncerController {
 
       return {};
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -99,7 +105,10 @@ export class SyncerController {
 
       return {};
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -120,7 +129,10 @@ export class SyncerController {
 
       return {};
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -131,7 +143,10 @@ export class SyncerController {
 
       return {};
     } catch (error) {
-      throw new RpcException({ code: status.NOT_FOUND, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.NOT_FOUND,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -142,7 +157,10 @@ export class SyncerController {
 
       return {};
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -153,7 +171,10 @@ export class SyncerController {
 
       return { quantity };
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -164,7 +185,10 @@ export class SyncerController {
 
       return { quantity };
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -173,7 +197,10 @@ export class SyncerController {
     try {
       return this.syncerService.planBuy(data.tokenSellAddress, data.tokenBuyAddress, data.quantity);
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -182,7 +209,10 @@ export class SyncerController {
     try {
       return this.syncerService.planSell(data.tokenSellAddress, data.tokenBuyAddress, data.quantity);
     } catch (error) {
-      throw new RpcException({ code: status.INTERNAL, message: error instanceof Error ? error.message : String(error) });
+      throw new RpcException({
+        code: status.INTERNAL,
+        message: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 

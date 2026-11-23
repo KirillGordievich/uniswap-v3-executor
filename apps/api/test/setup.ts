@@ -1,13 +1,12 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { Global, INestApplication, Module, ValidationPipe } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-
 import { DatabaseService } from '@libs/database';
 import { Logger } from '@libs/logger';
+import { Global, INestApplication, Module, ValidationPipe } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
 
-import { TokenModule } from '../src/app/token/token.module';
 import { EstimateModule } from '../src/app/estimate/estimate.module';
 import { HealthModule } from '../src/app/health/health.module';
+import { TokenModule } from '../src/app/token/token.module';
 
 const TEST_API_KEY = 'test-api-key-12345';
 

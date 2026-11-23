@@ -1,9 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-
+import { bufferToHex, hexToBuffer } from '@libs/core';
 import { DatabaseService } from '@libs/database';
 import { Logger } from '@libs/logger';
-import { bufferToHex, hexToBuffer } from '@libs/core';
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 import { ITokenDB, ITokenResponse } from './interfaces';
 

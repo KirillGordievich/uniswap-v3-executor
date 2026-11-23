@@ -1,11 +1,10 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Decimal } from 'decimal.js';
-
+import { bufferToHex, EvmCallError, isAddress, normalizeAddress, parseNumber } from '@libs/core';
 import { DatabaseService } from '@libs/database';
 import { EthersService } from '@libs/ethers';
 import { Logger } from '@libs/logger';
-import { isAddress, normalizeAddress, bufferToHex, EvmCallError, parseNumber } from '@libs/core';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { Decimal } from 'decimal.js';
 
 import { DigrammaService, Traversal } from './digramma/digramma.service';
 import { PoolService } from './pool/pool.service';
@@ -268,7 +267,11 @@ export class SyncerService implements OnModuleInit {
     return traversal.estimates[0].toString();
   }
 
-  planBuy(tokenSellAddress: string, tokenBuyAddress: string, quantity: string): { quantitySell: string; quantityBuy: string; path: string[] } {
+  planBuy(
+    tokenSellAddress: string,
+    tokenBuyAddress: string,
+    quantity: string,
+  ): { quantitySell: string; quantityBuy: string; path: string[] } {
     const quantitySell = new Decimal(quantity);
     const sellAddress = normalizeAddress(tokenSellAddress);
     const buyAddress = normalizeAddress(tokenBuyAddress);
@@ -278,12 +281,8 @@ export class SyncerService implements OnModuleInit {
     const tokenSellDecimals = this.digramma.getToken(sellAddress).decimals;
     const tokenBuyDecimals = this.digramma.getToken(buyAddress).decimals;
 
-    const quantitySellDecimal = traversal.estimates[0]
-      .mul('1e' + tokenSellDecimals)
-      .ceil();
-    const quantityBuyDecimal = traversal.estimates[traversal.estimates.length - 1]
-      .mul('1e' + tokenBuyDecimals)
-      .floor();
+    const quantitySellDecimal = traversal.estimates[0].mul('1e' + tokenSellDecimals).ceil();
+    const quantityBuyDecimal = traversal.estimates[traversal.estimates.length - 1].mul('1e' + tokenBuyDecimals).floor();
 
     return {
       quantitySell: quantitySellDecimal.toString(),
@@ -292,7 +291,11 @@ export class SyncerService implements OnModuleInit {
     };
   }
 
-  planSell(tokenSellAddress: string, tokenBuyAddress: string, quantity: string): { quantitySell: string; quantityBuy: string; path: string[] } {
+  planSell(
+    tokenSellAddress: string,
+    tokenBuyAddress: string,
+    quantity: string,
+  ): { quantitySell: string; quantityBuy: string; path: string[] } {
     const quantityBuy = new Decimal(quantity);
     const sellAddress = normalizeAddress(tokenSellAddress);
     const buyAddress = normalizeAddress(tokenBuyAddress);
@@ -302,12 +305,8 @@ export class SyncerService implements OnModuleInit {
     const tokenSellDecimals = this.digramma.getToken(sellAddress).decimals;
     const tokenBuyDecimals = this.digramma.getToken(buyAddress).decimals;
 
-    const quantitySellDecimal = traversal.estimates[0]
-      .mul('1e' + tokenSellDecimals)
-      .ceil();
-    const quantityBuyDecimal = traversal.estimates[traversal.estimates.length - 1]
-      .mul('1e' + tokenBuyDecimals)
-      .floor();
+    const quantitySellDecimal = traversal.estimates[0].mul('1e' + tokenSellDecimals).ceil();
+    const quantityBuyDecimal = traversal.estimates[traversal.estimates.length - 1].mul('1e' + tokenBuyDecimals).floor();
 
     return {
       quantitySell: quantitySellDecimal.toString(),

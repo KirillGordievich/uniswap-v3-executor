@@ -1,9 +1,14 @@
 import { Controller, Get, NotFoundException, Param, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiSecurity, ApiBadRequestResponse, ApiUnauthorizedResponse, ApiNotFoundResponse } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiSecurity,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
-import { BadRequestExceptionDTO, UnauthorizedExceptionDTO, NotFoundExceptionDTO } from '../common/dto/error.dto';
+import { BadRequestExceptionDTO, NotFoundExceptionDTO, UnauthorizedExceptionDTO } from '../common/dto/error.dto';
 import { ApiKeyGuard } from '../common/guards/api-key.guard';
-
 import { TokenParamDTO, TokenResponseDTO } from './dto';
 import { TokenService } from './token.service';
 

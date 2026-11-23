@@ -1,8 +1,7 @@
+import { Logger } from '@libs/logger';
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ethers } from 'ethers';
-
-import { Logger } from '@libs/logger';
 
 interface ProviderConfig {
   name: string;
@@ -27,9 +26,7 @@ export class EthersService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit(): Promise<void> {
     const providers = this.providerConfigs.map((config) => {
-      const provider = new ethers.providers.JsonRpcProvider(
-        { url: config.url, timeout: config.timeout },
-      );
+      const provider = new ethers.providers.JsonRpcProvider({ url: config.url, timeout: config.timeout });
 
       return { provider, priority: config.priority, stallTimeout: config.timeout };
     });

@@ -1,10 +1,9 @@
-import { Decimal } from 'decimal.js';
-
-import { InsufficientLiquidityError, Token, compareTokens } from '@libs/core';
+import { compareTokens, InsufficientLiquidityError, Token } from '@libs/core';
 import { toInt256 } from '@libs/math';
 import { addDelta } from '@libs/math';
 import { computeSwapStepBuy, computeSwapStepSell } from '@libs/math';
 import { getSqrtPriceAtTick, getTickAtSqrtPrice } from '@libs/math';
+import { Decimal } from 'decimal.js';
 
 import { TickBookService } from '../pool/tick-book.service';
 

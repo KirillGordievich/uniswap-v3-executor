@@ -1,6 +1,7 @@
 import createKeccakHash from 'keccak';
-import { bufferToHex, hexToBuffer, uint24ToBuffer } from './converters';
+
 import { UNISWAP_V3_FACTORY_ADDRESS, UNISWAP_V3_INIT_CODE_HASH } from './constants';
+import { bufferToHex, hexToBuffer, uint24ToBuffer } from './converters';
 
 const prefix = hexToBuffer('ff');
 const factoryAddress = hexToBuffer(UNISWAP_V3_FACTORY_ADDRESS);

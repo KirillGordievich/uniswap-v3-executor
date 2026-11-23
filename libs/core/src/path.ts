@@ -1,6 +1,6 @@
 import { hexToBuffer, uint24ToBuffer } from './converters';
-import { Token } from './token';
 import { pipFee } from './fee';
+import { Token } from './token';
 
 export type Path = Array<string | number>;
 

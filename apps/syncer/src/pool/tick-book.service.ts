@@ -1,13 +1,12 @@
-import createTree, { Tree } from 'functional-red-black-tree';
-
 import {
-  IntRange,
   getCompressedTick,
   getFirstTickInTickWord,
   getLastTickInTickWord,
   getTickWord,
   getUncompressedTick,
+  IntRange,
 } from '@libs/core';
+import createTree, { Tree } from 'functional-red-black-tree';
 
 export type TickLiquidity = {
   tick: number;

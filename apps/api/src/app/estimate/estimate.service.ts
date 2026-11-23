@@ -1,12 +1,19 @@
+import { Logger } from '@libs/logger';
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { Observable, lastValueFrom } from 'rxjs';
-
-import { Logger } from '@libs/logger';
+import { lastValueFrom, Observable } from 'rxjs';
 
 interface ISyncerService {
-  EstimateBuy(data: { tokenSellAddress: string; tokenBuyAddress: string; quantity: string }): Observable<{ quantity: string }>;
-  EstimateSell(data: { tokenSellAddress: string; tokenBuyAddress: string; quantity: string }): Observable<{ quantity: string }>;
+  EstimateBuy(data: {
+    tokenSellAddress: string;
+    tokenBuyAddress: string;
+    quantity: string;
+  }): Observable<{ quantity: string }>;
+  EstimateSell(data: {
+    tokenSellAddress: string;
+    tokenBuyAddress: string;
+    quantity: string;
+  }): Observable<{ quantity: string }>;
 }
 
 @Injectable()
