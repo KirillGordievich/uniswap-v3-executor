@@ -4,7 +4,6 @@
     "target": "ES2021",
     "lib": ["ES2021"],
     "moduleResolution": "node10",
-    "ignoreDeprecations": "6.0",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -20,6 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "incremental": true,
     "sourceMap": true,
+    "baseUrl": ".",
     "paths": {
       "@libs/core": ["./libs/core/src"],
       "@libs/core/*": ["./libs/core/src/*"],
