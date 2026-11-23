@@ -5,6 +5,12 @@
   "entryFile": "apps/api/src/main",
   "compilerOptions": {
     "tsConfigPath": "tsconfig.build.json",
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "assets": [
+      {
+        "include": "../../../libs/grpc/proto/*.proto",
+        "outDir": "dist/libs/grpc/proto"
+      }
+    ]
   }
 }

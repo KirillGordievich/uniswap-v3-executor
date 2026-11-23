@@ -1,1 +1,2 @@
-export { SyncerClientModule, SYNCER_PACKAGE } from './syncer-client.module';
+export { SYNCER_PROTO_PATH } from './proto';
+export { SYNCER_PACKAGE, SyncerClientModule } from './syncer-client.module';

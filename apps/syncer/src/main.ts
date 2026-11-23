@@ -1,6 +1,6 @@
+import { SYNCER_PROTO_PATH } from '@libs/grpc';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { join } from 'path';
 
 import { SyncerModule } from './syncer.module';
 
@@ -9,7 +9,7 @@ async function bootstrap(): Promise<void> {
     transport: Transport.GRPC,
     options: {
       package: 'syncer',
-      protoPath: join(process.cwd(), 'libs/grpc/proto/syncer.proto'),
+      protoPath: SYNCER_PROTO_PATH,
       url: `0.0.0.0:${process.env.SYNCER_PORT ?? '50051'}`,
     },
   });

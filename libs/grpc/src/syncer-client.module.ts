@@ -1,7 +1,8 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { join } from 'path';
+
+import { SYNCER_PROTO_PATH } from './proto';
 
 export const SYNCER_PACKAGE = 'SYNCER_PACKAGE';
 
@@ -21,7 +22,7 @@ export class SyncerClientModule {
               transport: Transport.GRPC,
               options: {
                 package: 'syncer',
-                protoPath: join(process.cwd(), 'libs/grpc/proto/syncer.proto'),
+                protoPath: SYNCER_PROTO_PATH,
                 url: configService.getOrThrow<string>('SYNCER_GRPC_URL'),
               },
             }),

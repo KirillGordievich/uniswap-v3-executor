@@ -22,7 +22,6 @@ WORKDIR /app
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/api/dist ./dist
-COPY --from=builder /app/libs/grpc/proto ./libs/grpc/proto
 COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3000
@@ -36,7 +35,6 @@ WORKDIR /app
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/syncer/dist ./dist
-COPY --from=builder /app/libs/grpc/proto ./libs/grpc/proto
 COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 50051
