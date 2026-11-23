@@ -25,3 +25,6 @@ cache/
 
 # Logs
 *.log
+
+# Repo-local tool binaries (make install)
+.bin/
