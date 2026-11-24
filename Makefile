@@ -5,7 +5,7 @@ PNPM ?= $(shell command -v pnpm >/dev/null 2>&1 && echo pnpm || echo corepack pn
 GITLEAKS_VERSION := 8.28.0
 GITLEAKS := .bin/gitleaks
 
-.PHONY: install gitleaks check lint typecheck test secrets
+.PHONY: install gitleaks check lint typecheck test secrets migrate migrate-new migrate-status
 
 ## install: dependencies + git hooks (husky, via the "prepare" script) + Prisma client + gitleaks
 install: gitleaks
@@ -15,6 +15,22 @@ install: gitleaks
 ## gitleaks: download the pinned gitleaks into .bin/ (no-op if already there)
 gitleaks:
 	@sh scripts/install-gitleaks.sh $(GITLEAKS_VERSION) .bin
+
+## migrate: apply pending migrations from prisma/migrations (DATABASE_URL from .env)
+migrate:
+	$(PNPM) prisma migrate deploy
+
+## migrate-new: create a migration from schema.prisma changes and apply it (local dev DB only:
+## `migrate dev` may offer to reset the DB on drift). `make migrate-new name=add_x`, or prompts for the name.
+migrate-new:
+	@name="$(name)"; \
+	if [ -z "$$name" ]; then read -p "Migration name: " name; fi; \
+	test -n "$$name" || { echo "migration name is required" >&2; exit 1; }; \
+	$(PNPM) prisma migrate dev --name "$$name"
+
+## migrate-status: which migrations are applied / pending
+migrate-status:
+	$(PNPM) prisma migrate status
 
 ## check: lint + typecheck + unit tests (run by the pre-commit hook)
 check: lint typecheck test

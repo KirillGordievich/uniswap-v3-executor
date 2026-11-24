@@ -17,7 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 make install                      # gitleaks into .bin/ + pnpm install (also installs husky hooks) + pnpm prisma generate
 cp .env.example .env
-pnpm prisma migrate dev           # needs Postgres; `pnpm docker:up` starts one (plus both services)
+make migrate                      # prisma migrate deploy; needs Postgres (`pnpm docker:up` starts one plus both services)
+make migrate-new name=add_x       # prisma migrate dev: new migration from schema.prisma changes (local DB only, may reset on drift)
+make migrate-status
 
 pnpm dev:api                      # nest start --watch, port 3000, Swagger at /docs
 pnpm dev:syncer                   # gRPC on SYNCER_PORT (50051); connects to Postgres + RPC on startup
