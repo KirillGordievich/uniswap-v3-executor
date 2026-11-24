@@ -30,10 +30,9 @@ TypeScript, NestJS 11, Prisma 6, ethers.js 5, gRPC, PostgreSQL, Docker, Jest
 ## Setup
 
 ```bash
-pnpm install
+make install                  # deps, git hooks, Prisma client, gitleaks (into .bin/)
 cp .env.example .env          # edit .env with your values
-pnpm prisma generate
-pnpm prisma migrate dev
+make migrate                  # apply migrations (needs Postgres: pnpm docker:up)
 
 # Development
 pnpm dev:api
@@ -56,9 +55,24 @@ pnpm docker:down
 
 ```bash
 pnpm test                     # all tests (150)
-pnpm test:math                # hardhat math verification
+pnpm test:math                # hardhat math verification (needs hardhat + @nomiclabs/hardhat-ethers installed)
 pnpm test:cov                 # coverage
 ```
+
+## Make commands
+
+| Command | Description |
+|---------|-------------|
+| `make install` | `pnpm install` (also installs the husky git hooks), `pnpm prisma generate`, and the pinned gitleaks into `.bin/` |
+| `make check` | Lint + typecheck + tests |
+| `make lint` / `make typecheck` / `make test` | Each step on its own |
+| `make secrets` | Scan staged changes for secrets with gitleaks (downloads it if missing) |
+| `make migrate` | Apply pending migrations (`prisma migrate deploy`, safe for any environment) |
+| `make migrate-new name=add_x` | Create a migration from `schema.prisma` changes and apply it (local DB only; prompts for the name if omitted) |
+| `make migrate-status` | Show applied and pending migrations |
+| `make gitleaks` | Download the pinned gitleaks into `.bin/` (no-op if already there) |
+
+Every `git commit` runs `make secrets` and then `make check`; the commit is blocked if either fails. The Makefile uses `corepack pnpm` when `pnpm` is not on PATH.
 
 ## API
 
