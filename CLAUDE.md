@@ -41,7 +41,7 @@ pnpm test:math                    # Hardhat: compiles Solidity mocks, checks lib
 
 `pnpm test` needs no DB, RPC, or running services. API tests mock `DatabaseService`, `Logger` and the `SYNCER_PACKAGE` gRPC client (see `apps/api/test/setup.ts`). The syncer tests mock `SyncerService`.
 
-A husky `pre-commit` hook (`.husky/pre-commit`, installed by the `prepare` script on `pnpm install`) runs `make secrets` then `make check`. The Makefile falls back to `corepack pnpm` when `pnpm` is not on PATH. gitleaks is pinned by `GITLEAKS_VERSION` in the Makefile and installed by `scripts/install-gitleaks.sh` (checksum-verified).
+A husky `pre-commit` hook (`.husky/pre-commit`, installed by the `prepare` script on `pnpm install`) runs `make secrets` then `make check` (`make check` is skipped when every staged file is `*.md`). The Makefile falls back to `corepack pnpm` when `pnpm` is not on PATH. gitleaks is pinned by `GITLEAKS_VERSION` in the Makefile and installed by `scripts/install-gitleaks.sh` (checksum-verified).
 
 `pnpm test:math` uses its own `libs/math/contracts/jest.config.ts`, and its global setup runs `hre.run('compile')`. `hardhat` and `@nomiclabs/hardhat-ethers` are **not** in `package.json` or the lockfile, so install them before running it.
 

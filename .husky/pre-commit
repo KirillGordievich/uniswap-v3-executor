@@ -1,2 +1,8 @@
 make secrets
-make check
+
+# Markdown can't break lint, types or tests: skip `make check` when every staged file is *.md
+if git diff --cached --name-only | grep -qv '\.md$'; then
+  make check
+else
+  echo "pre-commit: only Markdown staged, skipping make check"
+fi
